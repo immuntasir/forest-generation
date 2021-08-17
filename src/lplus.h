@@ -12,7 +12,7 @@ class LPlusSystem: public LSystem
 public:
 	bool isPlus;
 	LPlusSystem(R3Mesh *m);
-	string generateFromFile(const char * filename,const int iterationsOverride );
+	string generateFromFile(const char * filename,const int iterationsOverride, double leafSize);
 	virtual void run(const char command,const float param);
 	void setTurtlePosition(float x, float y, float z);
 };

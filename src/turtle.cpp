@@ -102,7 +102,8 @@ void TurtleSystem::restore()
 }
 void TurtleSystem::drawLeaf(float param)
 {
-
+  double random_number = (double)rand() / (double)RAND_MAX;
+  if (random_number<.5) return;
   R3Shape s=mesh->Leaf(direction);
   mesh->ScaleShape(s,param,param,param);
   R3Vector leafDirection(0,1,0);
@@ -116,6 +117,20 @@ void TurtleSystem::drawLeaf(float param)
   }
   mesh->TranslateShape(s,position.X(),position.Y(),position.Z());
 }
+float rand_gen_1() {
+   // return a uniformly distributed random value
+   return ( (float)(rand()) + 1. )/( (float)(RAND_MAX) + 1. );
+}
+float normalRandom_1(float mu, float sigma) {
+   // return a normally distributed random value
+   float v1=rand_gen_1();
+   float v2=rand_gen_1();
+   float seed = cos(2*3.14*v2)*sqrt(-2.*log(v1));
+   if (seed>2) seed = 2;
+   if (seed<-2) seed = -2;
+   return sigma * seed + mu;
+}
+
 void TurtleSystem::draw(float param)
 {
   static int num=0;
@@ -134,6 +149,10 @@ void TurtleSystem::draw(float param)
     slices=100;
   R3Shape s=mesh->Cylinder(reduction,slices);
 
+  //double expected_volume = param * thickness;
+  //double random_number = normalRandom_1(param, param*.2);
+  //double corrected_thickness = expected_volume / random_number;
+  //mesh->ScaleShape(s,param*thickness,random_number,param*thickness);
   mesh->ScaleShape(s,param*thickness,param,param*thickness);
   R3Vector cylinderDirection(0,1,0);
   R3Vector axis=cylinderDirection %  direction; //the axis to rotate on

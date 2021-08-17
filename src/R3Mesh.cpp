@@ -150,41 +150,45 @@ Tree(const char * descriptor_filename,const int iterations)
   // Leaf(R3Vector(0,1,0));
   // Update();
   // return;
-  ifstream tree_location_file("test.csv");
+  ifstream tree_location_file("points.csv");
   // this should be generated from IPP
   if(!tree_location_file) {
         cout << "Can not open tree location files\n";
         exit(1);
   }
   double x, z;
+  int typ, tmp;
   LPlusSystem l(this);
   int idx = 0;
   int tree_id;
-  int num_species = 2;
-  const char *descriptor_filenames[] = { "L++/pine.l++", "L++/tree3.l++" };
-  if (1!=1) {
+  int num_species = 4;
+  const char *descriptor_filenames[] = { "L++/tree4.l++", "L++/tree5.l++", "L++/tree6.l++" , "L++/tree7.l++"};
+  double leafSizes[] = {1.5, 1.6, 1.1, 1.4}; //1.5, 1.6, 1.3
+  if (1==10) {
     num_species = 1;
     descriptor_filenames[0] = { descriptor_filename };
   }
   
   while(!tree_location_file.eof()){
     idx += 1;
-    if (idx>=3){
-      break;
+    if (idx>=2){
+    //  break;
     }
-    tree_location_file >> x >> z;
-    cout << x << " --> " << z << endl;
-    x = x * 5;
-    z = z * 5;
+    char sep;
+    tree_location_file >>  x >> sep >> z >> sep >> typ;
+    cout << x << " --> " << z << " --> " << typ << endl;
+    x = x;
+    z = z;
     R3Vector origin(x,0,z);
     l.setTurtlePosition(x, 0, z);
-
-    tree_id = rand() % num_species;
-    descriptor_filename = descriptor_filenames[tree_id];
-    string lsystem=l.generateFromFile(descriptor_filename,iterations);
+    tree_id = (typ-1)%num_species;
+    //tree_id = rand() % num_species;
+    descriptor_filename = descriptor_filenames[typ-1];
+    string lsystem=l.generateFromFile(descriptor_filename,iterations, leafSizes[typ-1]);
     l.draw(lsystem);   
   }
   Update();
+  Write("forest2.off");
 
 }
 ////////////////////////////////////////////////////////////

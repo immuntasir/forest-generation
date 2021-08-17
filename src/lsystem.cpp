@@ -1,6 +1,7 @@
 #include "lsystem.h"
 #include <fstream>
 using namespace std;
+
 void LSystem::replaceAll(string& str, const string& from, const string& to) 
 {
 	if(from.empty())
@@ -79,6 +80,9 @@ string LSystem::generateFromFile(const char * filename,const int iterationsOverr
 	int iterations=(int)numbers[0];
 	if (iterationsOverride)
 		iterations=iterationsOverride;
+	double random_number = (double)rand() / (double)RAND_MAX;
+	if (random_number <= .33) iterations = iterations - 1;
+	else if (random_number >= .67) iterations = iterations + 1;
 	defaultCoefficient=numbers[1];
 	float thickness=numbers[2];
 	turtle.thickness=thickness/100;

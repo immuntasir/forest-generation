@@ -57,7 +57,7 @@ To run the system and generate a tree, simply do the following:
 
 export DISPLAY=$(ip route | awk '/^default/{print $3; exit}'):0
 make clean
-./run L++/tree.l++
+./run.sh L++/tree.l++
 
 
 

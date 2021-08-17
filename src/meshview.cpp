@@ -28,10 +28,16 @@ static int print_verbose = 0;
 // Display variables
 
 static R3Mesh *mesh = NULL;
-static R3Point camera_eye (0, 0, 4);
-static R3Vector camera_towards(0, 0, 1);
+static R3Point camera_eye (4, 0, 0);
+static R3Vector camera_towards(1, 0, 0);
 static R3Vector camera_up(0, 1, 0);
-static double camera_yfov = 0.75;
+//static R3Point camera_eye (0, 4, 0);
+//static R3Vector camera_towards(0, 1, 0);
+//static R3Vector camera_up(0, 0, 1);
+//static R3Point camera_eye (0, 0, 4);
+//static R3Vector camera_towards(0, 0, 1);
+//static R3Vector camera_up(0, 1, 0);
+static double camera_yfov = 0.65;
 static R3MeshFace *pick_face = NULL;
 static R3Point pick_position = R3zero_point;
 static bool pick_active = false;
@@ -43,7 +49,7 @@ static int show_curvatures = 0;
 static int show_bbox = 0;
 static int show_ids = 0;
 static int show_pick = 1;
-static int save_image = 0;
+static int save_image = 1;
 static int quit = 0;
 
 
@@ -56,7 +62,7 @@ static int GLUTwindow_width = 800;
 static int GLUTmouse[2] = { 0, 0 };
 static int GLUTbutton[3] = { 0, 0, 0 };
 static int GLUTmodifiers = 0;
-
+static int drawAxes = 0;
 
 
 // GLUT command list
@@ -91,7 +97,24 @@ void GLUTDrawText(const R3Point& p, const char *s)
 #endif
 }
 
+void GlutDrawAxes(){
 
+	if(drawAxes==1){
+	    //cout << "Drawing axis\n";
+		glColor3f(0, 0, 1);
+		glLineWidth(2);
+		glBegin(GL_LINES);{
+			glVertex3f(50,0,0);
+			glVertex3f(-50,0,0);
+
+			glVertex3f(0,-50,0);
+			glVertex3f(0, 50,0);
+
+			glVertex3f(0,0, 50);
+			glVertex3f(0,0,-50);
+		}glEnd();
+	}
+}
 
 
 void GLUTSaveImage(const char *filename)
@@ -439,7 +462,8 @@ void GLUTRedraw(void)
     if (output_mesh_name) mesh->Write(output_mesh_name);
     GLUTStop();
   }
-
+  // drawing axes
+    GlutDrawAxes();
   // Swap buffers 
   glutSwapBuffers();
 }    
