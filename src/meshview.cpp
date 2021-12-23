@@ -28,15 +28,17 @@ static int print_verbose = 0;
 // Display variables
 
 static R3Mesh *mesh = NULL;
-static R3Point camera_eye (4, 0, 0);
-static R3Vector camera_towards(1, 0, 0);
-static R3Vector camera_up(0, 1, 0);
+//static R3Point camera_eye (0, 0, 4);
+//static R3Vector camera_towards(-1, 0, 0);
+//static R3Vector camera_up(0, 0, 1);
+//up
 //static R3Point camera_eye (0, 4, 0);
 //static R3Vector camera_towards(0, 1, 0);
 //static R3Vector camera_up(0, 0, 1);
-//static R3Point camera_eye (0, 0, 4);
-//static R3Vector camera_towards(0, 0, 1);
-//static R3Vector camera_up(0, 1, 0);
+//front
+static R3Point camera_eye (0, 0, 4);
+static R3Vector camera_towards(0, 0, 1);
+static R3Vector camera_up(0, 1, 0);
 static double camera_yfov = 0.65;
 static R3MeshFace *pick_face = NULL;
 static R3Point pick_position = R3zero_point;

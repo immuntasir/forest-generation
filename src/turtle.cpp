@@ -116,6 +116,10 @@ void TurtleSystem::drawLeaf(float param)
       mesh->RotateShape(s,rotateAngle,axis);
   }
   mesh->TranslateShape(s,position.X(),position.Y(),position.Z());
+
+  FILE *fp = fopen("locs.txt", "a");
+  fprintf(fp, "%lf %lf %lf\n", s,position.X(),position.Y(),position.Z());
+  fclose(fp);
 }
 float rand_gen_1() {
    // return a uniformly distributed random value

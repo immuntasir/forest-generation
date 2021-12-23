@@ -150,12 +150,13 @@ Tree(const char * descriptor_filename,const int iterations)
   // Leaf(R3Vector(0,1,0));
   // Update();
   // return;
-  ifstream tree_location_file("points.csv");
+  printf("%s\n", descriptor_filename);
+  //ifstream tree_location_file("points.csv");
   // this should be generated from IPP
-  if(!tree_location_file) {
-        cout << "Can not open tree location files\n";
-        exit(1);
-  }
+  //if(!tree_location_file) {
+  //      cout << "Can not open tree location files\n";
+  //      exit(1);
+  //}
   double x, z;
   int typ, tmp;
   LPlusSystem l(this);
@@ -164,21 +165,26 @@ Tree(const char * descriptor_filename,const int iterations)
   int num_species = 4;
   const char *descriptor_filenames[] = { "L++/tree4.l++", "L++/tree5.l++", "L++/tree6.l++" , "L++/tree7.l++"};
   double leafSizes[] = {1.5, 1.6, 1.1, 1.4}; //1.5, 1.6, 1.3
-  if (1==10) {
+  if (strcmp(descriptor_filename, "forest") != 0) {
     num_species = 1;
     descriptor_filenames[0] = { descriptor_filename };
   }
+
+  FILE *fp = fopen("locs.txt", "w");
+  fprintf(fp, "%d\n", 31);
+  fclose(fp);
   
   while(!tree_location_file.eof()){
     idx += 1;
-    if (idx>=2){
-    //  break;
-    }
+    //if (idx>=2) break;
     char sep;
     tree_location_file >>  x >> sep >> z >> sep >> typ;
     cout << x << " --> " << z << " --> " << typ << endl;
     x = x;
     z = z;
+    FILE *fp = fopen("locs.txt", "a");
+    fprintf(fp, "%d %lf %lf %lf\n", idx, x, 0.0, z);
+    fclose(fp);
     R3Vector origin(x,0,z);
     l.setTurtlePosition(x, 0, z);
     tree_id = (typ-1)%num_species;
@@ -188,7 +194,7 @@ Tree(const char * descriptor_filename,const int iterations)
     l.draw(lsystem);   
   }
   Update();
-  Write("forest2.off");
+  Write("forest3.off+");
 
 }
 ////////////////////////////////////////////////////////////
