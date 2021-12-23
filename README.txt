@@ -53,14 +53,28 @@ The L++ format is slightly different, in the following ways:
 
 The major component of L++ is that it supports leafs, so it needs to save its output to OFF+ files to properly reflect leaf textures. Leaves are also affected by gravity, and their tip bends towards ground.
 
+We use wsl2 in Windows to run the code on Ubuntu.
+
+How to install ws2: Install Windows Subsystem for Linux (WSL) on Windows 10 | Microsoft Docs
+How to install Xserver: VcXsrv Windows X Server download | SourceForge.net
+
+In the Ubuntu terminal, do the following.
+
+sudo apt install g++ ;  
+sudo apt-get update ; 
+sudo apt-get install build-essential
+sudo apt-get install freeglut3-dev;
+
 To run the system and generate a tree, simply do the following:
 
+Always follow below steps after opening Ubuntu, open Xserver app
+Click next>>next >>Untick Native opengl>>tick Disable access control
+
+Then in Ubuntu, do the following.
+
+cd /mnt/c/path to the downloaded folder
 export DISPLAY=$(ip route | awk '/^default/{print $3; exit}'):0
 make clean
-./run.sh L++/tree.l++
+./run.sh forest
 
-
-
-
-
-The code relies on the C++ 3D code-set created by people at Princeton University (Connelly Barnes gave it to me).
+The code relies on the C++ 3D code-set created by people at Princeton University.
